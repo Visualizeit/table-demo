@@ -45,7 +45,15 @@ const table = useVueTable({ data: users, columns, getCoreRowModel: getCoreRowMod
     <NTable>
       <thead>
         <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-          <th v-for="header in headerGroup.headers" :key="header.id" :colSpan="header.colSpan">
+          <th
+            v-for="header in headerGroup.headers"
+            :key="header.id"
+            :colSpan="header.colSpan"
+            :style="{
+              ...(header.column.columnDef.meta?.fixed &&
+                fixedStyle(header.column.columnDef.meta.fixed))
+            }"
+          >
             <FlexRender
               v-if="!header.isPlaceholder"
               :render="header.column.columnDef.header"
